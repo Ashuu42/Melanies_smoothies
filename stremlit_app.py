@@ -6,7 +6,7 @@ from snowflake.snowpark.functions import col
 # Write directly to the app
 st.title(" :cup_with_straw: Customize your Smoothie :cup_with_straw:")
 st.write(
-  """ Choose the fruits you wants in your custom smoothie
+  """ Chose the fruits you wants in your custom smoothie
   """
 )
 
@@ -25,7 +25,7 @@ pd_df= my_dataframe.to_pandas()
 #st.stop()
 
 ingredients_list = st.multiselect(
-    'choose up to 5 ingredients:',
+    'chose up to 5 ingredients:',
      my_dataframe
     ,max_selections=5
 )
@@ -34,12 +34,14 @@ ingredients_list = st.multiselect(
 if ingredients_list:
     ingredients_string = ''
 
-    for fruit_choosen in ingredients_list:
-        ingredients_string += fruit_choosen + ' '
+    for fruit_chosen in ingredients_list:
+        ingredients_string += fruit_chosen + ' '
+      
         search_on=pd_df.loc[pd_df['FRUIT_NAME'] == fruit_chosen, 'SEARCH_ON'].iloc[0]
         st.write('The search value for ', fruit_chosen,' is ', search_on, '.')
-        st.subheader(fruit_choosen+ ' nutrition information')
-        smoothiefroot_response = requests.get("https://my.smoothiefroot.com/api/fruit/"+ fruit_choosen)
+      
+        st.subheader(fruit_chosen+ ' nutrition information')
+        smoothiefroot_response = requests.get("https://my.smoothiefroot.com/api/fruit/"+ fruit_chosen)
         sf_df=st.dataframe(data=smoothiefroot_response.json(), use_container_width=True)
 
 #st.write(ingredients_string)
